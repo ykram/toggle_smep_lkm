@@ -3,17 +3,14 @@
 
 MODULE_LICENSE("GPL");
 
-void change_smep(int smep_on) {
+void change_smep(int smep_on)
+{
 	unsigned long cr4 = 0;
 
-	__asm__(
-		"movq %%cr4, %0;"
-		: "=a" (cr4)
-		:
-		:
-	);
+	__asm__("movq %%cr4, %0;"
+		: "=a" (cr4) : : );
 
-	if(smep_on == 0)
+	if (smep_on == 0)
 		cr4 &= ~(1 << 20);
 	else
 		cr4 |= (1 << 20);
@@ -26,15 +23,17 @@ void change_smep(int smep_on) {
 	);
 }
 
-int init_mod(void) {
-	printk(KERN_INFO "Turning SMEP off...\n");
+int init_mod(void)
+{
+	pr_debug("Turning SMEP off...\n");
 	change_smep(0);
 
 	return 0;
 }
 
-void cleanup_mod(void) {
-	printk(KERN_INFO "Turning SMEP back on...\n");
+void cleanup_mod(void)
+{
+	pr_debug("Turning SMEP back on...\n");
 	change_smep(1);
 }
 
