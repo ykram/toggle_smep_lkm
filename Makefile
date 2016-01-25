@@ -1,4 +1,7 @@
+CONFIG_MODULE_SIG=n
+
 obj-m = toggle_smep.o
+
 M=$(shell pwd)
 
 all:
