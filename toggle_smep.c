@@ -3,7 +3,7 @@
 
 MODULE_LICENSE("GPL");
 
-void change_smep(int smep_on)
+void toggle_smep(int smep_on)
 {
 	unsigned long cr4 = 0;
 
@@ -26,7 +26,7 @@ void change_smep(int smep_on)
 int init_mod(void)
 {
 	pr_debug("Turning SMEP off...\n");
-	change_smep(0);
+	toggle_smep(0);
 
 	return 0;
 }
@@ -34,7 +34,7 @@ int init_mod(void)
 void cleanup_mod(void)
 {
 	pr_debug("Turning SMEP back on...\n");
-	change_smep(1);
+	toggle_smep(1);
 }
 
 module_init(init_mod);
